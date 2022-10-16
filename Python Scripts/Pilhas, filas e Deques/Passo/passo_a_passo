@@ -1,0 +1,29 @@
+1- Começar um círculo de repetição
+2- Entrada de um dado do tipo str
+3-Se este dado é '}' ou ']' ou '')'' e o topo da fila está vazio:
+	3.1- Exibir mensagem de error 'Caractere inválido, para usar fechamento de chaves, parênteses ou colchetes é necessários abrí-los primeiro. Digite um caracter válido, por favor:'
+	3.1.1- Enquanto o caracter for igual a "]" ou ")" "}":
+		3.1.1.1- Exibir mensagem de erro 'Caracter inválido,  para usar fechamento de chaves, parênteses ou colchetes é necessários abrí-los primeiro. Digite um caracter válido, por favor:'
+4- Se este dado é '{' ou '[' ou '(':
+	4.1- Adicione a pilha
+5- Se Não Se este dado for '}': 
+	5.1- Se o topo da pilha for '{':
+		5.1.1- Adicione a pilha
+	5.2 Se não:
+		5.2.1-Exibir mensagem de erro 'Caracter inválido, caso deseje fechar alguma expresão digite:"}"'
+        5.2.1.1- Enquanto o caracter for igual a "]" ou ")":
+                5.2.1.1.1- Exibir mensagem de erro 'Caracter inválido, caso deseje fechar alguma expresão digite:"}"'
+6-Se este dado for ']': 
+	6.1- Se o topo da pilha for '[':
+		6.1.1- Adicione a pilha
+	6.2 Se não:
+		6.2.1-Exibir mensagem de erro 'Caracter inválido, caso deseje fechar alguma expresão digite:"]"'
+        6.2.1.1- Enquanto o caracter for igual a "}" ou ")"
+                6.2.1.1.1- Exibir mensagem de erro 'Caracter inválido, caso deseje fechar alguma expresão digite:"]"'
+7-Se este dado for ')': 
+	7.1- Se o topo da pilha for '(':
+		7.1.1- Adicione a pilha
+	7.2 Se não:
+		7.2.1-Exibir mensagem de erro 'Caracter inválido, caso deseje fechar alguma expresão digite:")"'
+        7.2.1.1- Enquanto o caracter for igual a "]" ou ")"
+                7.2.1.1.1- Exibir mensagem de erro 'Caracter inválido, caso deseje fechar alguma expresão digite:")"'
