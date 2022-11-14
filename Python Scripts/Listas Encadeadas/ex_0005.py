@@ -33,7 +33,6 @@ class ListaDuplamenteEncadeada:
         if self.primeiro.proximo == None:
           self.ultimo = None
         else:
-    def e
             self.primeiro.proximo.anterior = None  
         self.primeiro = self.primeiro.proximo
         return temp
