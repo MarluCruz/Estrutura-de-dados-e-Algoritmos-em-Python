@@ -11,12 +11,8 @@ class ListaEncadeadaDupla:
         self.ultimo = None
     def __lista_vazia(self):
         return self.primeiro == None
-    def insere_inicio(self, valor):
-        novo = No(valor)
-        if self.__lista_vazia():
-            self.ultimo = novo
-        novo.proximo = self.primeiro
-        self.primeiro = novo
+    def lista_vazia_nao_privada(self):
+        return self.__lista_vazia()
     def insere_final(self, valor):
         novo = No(valor)
         if self.__lista_vazia():
@@ -26,21 +22,13 @@ class ListaEncadeadaDupla:
         self.ultimo = novo
     def excluir_inicio(self):
         if self.__lista_vazia():
-            print('A lista está vazia')
+            print('A fila está vazia')
             return
         temp = self.primeiro
         if self.primeiro.proximo == None:
             self.ultimo = None
         self.primeiro = self.primeiro.proximo
         return temp
-    def mostrar(self):
-        if self.__lista_vazia():
-            print('A lista está vazia')
-            return
-        atual = self.primeiro
-        while atual != None:
-            atual.mosta_no()
-            atual = atual.proximo
 class FilaListaEncadeada:
     def __init__(self):
         self.lista = ListaEncadeadaDupla()
@@ -49,9 +37,9 @@ class FilaListaEncadeada:
     def desenfileirar (self):
         return self.lista.excluir_inicio()
     def fila_vazia(self):
-        return self.lista.__lista_vazia()
+        return self.lista.lista_vazia_nao_privada()
     def ver_inicio(self):
-        return self.lista.primeiro
+        return self.lista.primeiro.valor
 def switch (case):
     if case == '1':
         print('Digite o valor que será enfileirado:\n')
@@ -65,9 +53,14 @@ def switch (case):
             print(desenfileirado.valor, ' Foi desenfileirado')
             return desenfileirado.valor
     elif case == '3':
-        return lista_fila.fila_vazia()
+        if lista_fila.fila_vazia():
+            print("A fila está vazia")
+            return 0
+        else:
+            print('A fila não está vazia')
+            return 1
     elif case == '4':
-        print(lista_fila.ver_inicio)
+        print(lista_fila.ver_inicio())
     else:
         print('Opção inválida digite uma opção válida, por favor:')
         option = input(int())
@@ -86,6 +79,6 @@ while True:
     if case == '5':
         break
     else:
-         validador= switch(case)
+         validador = switch(case)
          if validador == "Break":
             break
