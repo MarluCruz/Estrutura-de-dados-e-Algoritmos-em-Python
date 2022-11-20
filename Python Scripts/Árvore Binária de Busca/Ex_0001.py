@@ -85,9 +85,81 @@ class ArvoreBinarariaBusca:
             if atual == self.raiz:
                 self.raiz == None
             elif e_esquerda == True:
+                self.ligacoes.remove(str(pai.valor) + '->' + str(atual.valor)) #Essa codificação é opcional
                 pai.esquerda = None
             else:
-                pai.direita = None   
+                self.ligacoes.remove(str(pai.valor) + '->' + str(atual.valor)) #Essa codificação é opcional
+                pai.direita = None
+        # O nó a ser apagado não possui filho na direita
+        elif atual.direita == None:
+             #Essa codificação é opcional
+            self.ligacoes.remove(str(pai.valor) + '->' + str(atual.valor))
+            self.ligacoes.remove(str(atual.valor) + '->' + str(atual.esquerda.valor)) 
+            #-----------------------------
+            if atual == self.raiz:
+                self.raiz = atual.esquerda
+                
+                self.ligacoes.append(str(self.raiz.valor) + '->' + str(atual.esquerda.valor)) #Essa codificação é opcional
+            elif e_esquerda == True:
+                pai.esquerda = atual.esquerda
+                #Essa codificação é opcional
+                self.ligacoes.append(str(pai.valor) + '->' + str(atual.esquerda.valor))
+            else:
+                pai.direita = atual.esquerda
+                #Essa codificação é opcional
+                self.ligacoes.append(str(pai.valor) +'->'
+                + str (atual.esquerda.valor))
+        # O nó a ser apagao não possui filho na esquerda
+        elif atual.esquerda == None:
+             #Essa condição é opcional
+            self.ligacoes.remove(str(pai.valor) + '->' + str(atual.valor))
+            self.ligacoes.remove(str(atual.valor) + '->' + str(atual.direita.valor))
+            #_________________________
+            if atual == self.raiz:
+                self.ligacoes.append(str(self.raiz.valor) + '->' + str(atual.direita.valor)) #Essa condificação é opcional
+                self.raiz = atual.direita
+            elif e_esquerda == True:
+                self.ligacoes.append(str(pai.valor) + '->' + str(atual.direita.valor)) #Essa codificação é opcional
+                pai.esquerda = atual.direita
+            else:
+                self.ligacoes.append(str(pai.valor) + '->' + str(atual.direita.valor))
+                pai.direita = atual.direita
+        # O nó possui dois filhos
+        else:
+            sucessor = self.get_sucessor(atual)
+            #Esta codificação é opcional
+            self.ligacoes.remove(str(pai.valor) + '->' + str(atual.valor))
+            self.ligacoes.remove(str(atual.direita.valor) + '->' + str(sucessor.valor))
+            self.ligacoes.remove(str(atual.valor) + '->' + str(atual.esquerda.valor))
+            self.ligacoes.remove(str(atual.valor) + '->' + str(atual.direita.valor))
+            #__________________________
+            if atual == self.raiz:
+                self.ligacoes.append(str(self.raiz.valor) + '->' + str(sucessor.valor))#Esta codificação é opcional
+                self.raiz = sucessor
+            elif e_esquerda == True:
+                self.ligacoes.append(str(pai.valor) + '->' + str(sucessor.valor)) #Esta codificação é opcional
+                pai.esquerda = sucessor
+            else:
+                self.ligacoes.append(str(pai.valor) + '->' + str(sucessor.valor))#Esta codificação é opcional
+                pai.direita = sucessor
+            #Esta codificação é opcional
+            self.ligacoes.append(str(sucessor.valor) + '->' + str(atual.esquerda.valor))
+            self.ligacoes.append(str(sucessor.valor) + '->' + str(atual.direita.valor))
+             #__________________________
+            sucessor.esquerda = atual.esquerda
+        return True
+    def get_sucessor(self, no):
+        pai_sucessor = no
+        sucessor = no
+        atual = no.direita
+        while atual != None:
+            pai_sucessor = sucessor
+            sucessor = atual
+            atual = atual.esquerda
+        if sucessor != no.direita:
+            pai_sucessor.esquerda = sucessor.direita
+            sucessor.direita = no.direita
+        return sucessor
 #Inserção e visualização:
 arvore = ArvoreBinarariaBusca()
 arvore.inserir(53)
@@ -115,3 +187,7 @@ else:
 arvore.pre_ordem(arvore.raiz)
 arvore.em_ordem(arvore.raiz)
 arvore.no_pos_ordem(arvore.raiz)
+#Excluir
+
+arvore.excluir(72)
+print(arvore.ligacoes)
