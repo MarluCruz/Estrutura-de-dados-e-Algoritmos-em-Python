@@ -174,20 +174,18 @@ arvore.inserir(72)
 arvore.inserir(71)
 arvore.inserir(84)
 arvore.inserir(79)
-print(arvore.raiz.esquerda.valor)
-print(arvore.raiz.direita.valor)
-print(arvore.ligacoes)
+""""
 #Pesquisa
 if arvore.pesquisar(72) == None:
     (print('Elemento não localizado'))
 else:
     print('Elemento localizado')
-
+"""
 #Travessia
-arvore.pre_ordem(arvore.raiz)
-arvore.em_ordem(arvore.raiz)
+#arvore.pre_ordem(arvore.raiz)
+#arvore.em_ordem(arvore.raiz)
 arvore.no_pos_ordem(arvore.raiz)
 #Excluir
 
-arvore.excluir(72)
-print(arvore.ligacoes)
+#arvore.excluir(72)
+#print(arvore.ligacoes)
