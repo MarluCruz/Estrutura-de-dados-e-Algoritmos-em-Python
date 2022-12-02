@@ -1,9 +1,10 @@
-#Criação de Um Grafo
+# GRafo com Busca Gulosa
 import numpy as np
 class Vertice:
-    def __init__(self, rotulo):
+    def __init__(self, rotulo, distancia_objetivo):
         self.rotulo = rotulo
         self.visitado = False
+        self.distancia_objetivo = distancia_objetivo
         self.adjacentes = []
 
     def adiciona_adjacente(self, adjacente):
@@ -19,20 +20,20 @@ class Adjacente:
         self.custo = custo
 
 class Grafo:
-    arad = Vertice('Arad')
-    zerind = Vertice('Zerind')
-    oradea = Vertice('Oradea')
-    sibiu = Vertice('Sibiu')
-    timisoara = Vertice('Timisoara')
-    lugoj = Vertice('Lugoj')
-    mehadia = Vertice('Mehadia')
-    dobreta = Vertice('Dobreta')
-    craiova = Vertice('Craiova')
-    rimnicu = Vertice('Rimnicu')
-    fagaras = Vertice('Fagaras')
-    pitesti = Vertice('Pitesti')
-    bucharest = Vertice('Bucharest')
-    giurgiu = Vertice('Giurgiu')
+    arad = Vertice('Arad', 366)
+    zerind = Vertice('Zerind', 374)
+    oradea = Vertice('Oradea', 380)
+    sibiu = Vertice('Sibiu', 253)
+    timisoara = Vertice('Timisoara', 329)
+    lugoj = Vertice('Lugoj', 244)
+    mehadia = Vertice('Mehadia', 241)
+    dobreta = Vertice('Dobreta', 242)
+    craiova = Vertice('Craiova', 160)
+    rimnicu = Vertice('Rimnicu', 193)
+    fagaras = Vertice('Fagaras', 178)
+    pitesti = Vertice('Pitesti', 98)
+    bucharest = Vertice('Bucharest', 0)
+    giurgiu = Vertice('Giurgiu', 77)
 
     arad.adiciona_adjacente(Adjacente(zerind, 75))
     arad.adiciona_adjacente(Adjacente(sibiu, 140))
@@ -205,7 +206,86 @@ class BuscaLargura:
         if self.fila.numero_elementos > 0:
             self.buscar()
 
+class VetorOrdenado:
+  
+  def __init__(self, capacidade):
+    self.capacidade = capacidade
+    self.ultima_posicao = -1
+    # Mudança no tipo de dados
+    self.valores = np.empty(self.capacidade, dtype=object)
+
+  # Referência para o vértice e comparação com a distância para o objetivo
+  def insere(self, vertice):
+    if self.ultima_posicao == self.capacidade - 1:
+      print('Capacidade máxima atingida')
+      return
+    posicao = 0
+    for i in range(self.ultima_posicao + 1):
+      posicao = i
+      if self.valores[i].distancia_objetivo > vertice.distancia_objetivo:
+        break
+      if i == self.ultima_posicao:
+        posicao = i + 1
+    x = self.ultima_posicao
+    while x >= posicao:
+      self.valores[x + 1] = self.valores[x]
+      x -= 1
+    self.valores[posicao] = vertice
+    self.ultima_posicao += 1
+
+  def imprime(self):
+    if self.ultima_posicao == -1:
+      print('O vetor está vazio')
+    else:
+      for i in range(self.ultima_posicao + 1):
+        print(i, ' - ', self.valores[i].rotulo, ' - ', self.valores[i].distancia_objetivo) 
+
+class Gulosa:
+  def __init__(self, objetivo):
+    self.objetivo = objetivo
+    self.encontrado = False
+
+  def buscar(self, atual):
+    print('-------')
+    print('Atual: {}'.format(atual.rotulo))
+    atual.visitado = True
+
+    if atual == self.objetivo:
+      self.encontrado = True
+    else:
+      vetor_ordenado = VetorOrdenado(len(atual.adjacentes))
+      for adjacente in atual.adjacentes:
+        if adjacente.vertice.visitado == False:
+          adjacente.vertice.visitado == True
+          vetor_ordenado.insere(adjacente.vertice)
+      vetor_ordenado.imprime()
+
+      if vetor_ordenado.valores[0] != None:
+        self.buscar(vetor_ordenado.valores[0]) 
+
+class Gulosa:
+  def __init__(self, objetivo):
+    self.objetivo = objetivo
+    self.encontrado = False
+
+  def buscar(self, atual):
+    print('-------')
+    print('Atual: {}'.format(atual.rotulo))
+    atual.visitado = True
+
+    if atual == self.objetivo:
+      self.encontrado = True
+    else:
+      vetor_ordenado = VetorOrdenado(len(atual.adjacentes))
+      for adjacente in atual.adjacentes:
+        if adjacente.vertice.visitado == False:
+          adjacente.vertice.visitado == True
+          vetor_ordenado.insere(adjacente.vertice)
+      vetor_ordenado.imprime()
+
+      if vetor_ordenado.valores[0] != None:
+        self.buscar(vetor_ordenado.valores[0])  
+ 
 grafo = Grafo()
-busca_largura = BuscaLargura(grafo.arad)
-busca_largura.buscar()
-print(busca_largura.fila.numero_elementos)
+busca_gulosa = Gulosa(grafo.bucharest)
+busca_gulosa.buscar(grafo.arad)
