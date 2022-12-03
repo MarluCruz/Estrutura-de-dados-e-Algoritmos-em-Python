@@ -207,7 +207,7 @@ class BuscaLargura:
         if self.fila.numero_elementos > 0:
             self.buscar()
 
-class VetorOrdenado: # Vetror para realizar busca 
+class VetorOrdenado:
   
   def __init__(self, capacidade):
     self.capacidade = capacidade
@@ -215,15 +215,15 @@ class VetorOrdenado: # Vetror para realizar busca
     # Mudança no tipo de dados
     self.valores = np.empty(self.capacidade, dtype=object)
 
-  # Referência para o vértice e comparação com a distância para o objetivo
-  def insere(self, vertice):
+  # Referência para o vértice e comparação com a distância A*
+  def insere(self, adjacente):
     if self.ultima_posicao == self.capacidade - 1:
       print('Capacidade máxima atingida')
       return
     posicao = 0
     for i in range(self.ultima_posicao + 1):
       posicao = i
-      if self.valores[i].distancia_objetivo > vertice.distancia_objetivo:
+      if self.valores[i].distancia_aestrela > adjacente.distancia_aestrela:
         break
       if i == self.ultima_posicao:
         posicao = i + 1
@@ -231,7 +231,7 @@ class VetorOrdenado: # Vetror para realizar busca
     while x >= posicao:
       self.valores[x + 1] = self.valores[x]
       x -= 1
-    self.valores[posicao] = vertice
+    self.valores[posicao] = adjacente
     self.ultima_posicao += 1
 
   def imprime(self):
@@ -239,7 +239,10 @@ class VetorOrdenado: # Vetror para realizar busca
       print('O vetor está vazio')
     else:
       for i in range(self.ultima_posicao + 1):
-        print(i, ' - ', self.valores[i].rotulo, ' - ', self.valores[i].distancia_objetivo) 
+        print(i, ' - ', self.valores[i].vertice.rotulo, ' - ', 
+              self.valores[i].custo, ' - ', 
+              self.valores[i].vertice.distancia_objetivo, ' - ',
+              self.valores[i].distancia_aestrela)   
 
 class Gulosa:
   def __init__(self, objetivo):
@@ -264,4 +267,52 @@ class Gulosa:
       if vetor_ordenado.valores[0] != None:
         self.buscar(vetor_ordenado.valores[0]) 
 
+class Gulosa:
+  def __init__(self, objetivo):
+    self.objetivo = objetivo
+    self.encontrado = False
 
+  def buscar(self, atual):
+    print('-------')
+    print('Atual: {}'.format(atual.rotulo))
+    atual.visitado = True
+
+    if atual == self.objetivo:
+      self.encontrado = True
+    else:
+      vetor_ordenado = VetorOrdenado(len(atual.adjacentes))
+      for adjacente in atual.adjacentes:
+        if adjacente.vertice.visitado == False:
+          adjacente.vertice.visitado == True
+          vetor_ordenado.insere(adjacente.vertice)
+      vetor_ordenado.imprime()
+
+      if vetor_ordenado.valores[0] != None:
+        self.buscar(vetor_ordenado.valores[0]) 
+
+class AEstrela:
+  def __init__(self, objetivo):
+    self.objetivo = objetivo
+    self.encontrado = False
+
+  def buscar(self, atual):
+    print('----------')
+    print('Atual: {}'.format(atual.rotulo))
+    atual.visitado = True
+
+    if atual == self.objetivo:
+      self.encontrado = True
+    else:
+      vetor_ordenado = VetorOrdenado(len(atual.adjacentes))
+      for adjacente in atual.adjacentes:
+        if adjacente.vertice.visitado == False:
+          adjacente.vertice.visitado = True
+          vetor_ordenado.insere(adjacente)
+      vetor_ordenado.imprime()
+
+      if vetor_ordenado.valores[0] != None:
+        self.buscar(vetor_ordenado.valores[0].vertice)
+ 
+grafo = Grafo()
+busca_aestrela = AEstrela(grafo.bucharest)
+busca_aestrela.buscar(grafo.arad)
