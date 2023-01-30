@@ -1,22 +1,22 @@
 #Criação de Um Grafo
 import numpy as np
-class Vertice:
+class Vertice: #Representam os objetos reais
     def __init__(self, rotulo):
-        self.rotulo = rotulo
-        self.visitado = False
-        self.adjacentes = []
+        self.rotulo = rotulo #O conteúdo do vértice
+        self.visitado = False # Se o vértice já foi visitado
+        self.adjacentes = [] # Aqui criamos uma lista que vai dizer quantos vértices estão adjacentes a este vértice.
 
-    def adiciona_adjacente(self, adjacente):
-        self.adjacentes.append(adjacente)
+    def adiciona_adjacente(self, adjacente): #Esta função é um método que adiciona os vértices adjacentes
+        self.adjacentes.append(adjacente) #
 
     def mostra_adjacentes(self):
         for i in self.adjacentes:
             print(i.vertice.rotulo, i.custo)
 
-class Adjacente:
+class Adjacente: #Representa as ligações entre os vértices
     def __init__(self, vertice, custo):
-        self.vertice = vertice
-        self.custo = custo
+        self.vertice = vertice # Aqui nós temos o nome do vértice que está ligado ao "rótulo"
+        self.custo = custo # Por se tratar de um grafo que representa estradas ele é ponderado e seus vértices possuem um valor ou "custo"
 
 class Grafo:
     arad = Vertice('Arad')
