@@ -8,7 +8,7 @@ class No:
         print(self.valor)
 class ArvoreBinarariaBusca:
     def __init__(self):
-        self.raiz = None #A raiz de uma árvore vazia aponta para tem valor None
+        self.raiz = None #A raiz de uma árvore vazia aponta  valor None
         self.ligacoes = []
     def inserir(self, valor):
         novo = No(valor)
@@ -182,9 +182,9 @@ else:
     print('Elemento localizado')
 """
 #Travessia
-#arvore.pre_ordem(arvore.raiz)
+arvore.pre_ordem(arvore.raiz)
 #arvore.em_ordem(arvore.raiz)
-arvore.no_pos_ordem(arvore.raiz)
+#arvore.no_pos_ordem(arvore.raiz)
 #Excluir
 
 #arvore.excluir(72)
