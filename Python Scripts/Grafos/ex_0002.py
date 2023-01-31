@@ -4,7 +4,7 @@ class Vertice:
     def __init__(self, rotulo, distancia_objetivo):
         self.rotulo = rotulo
         self.visitado = False
-        self.distancia_objetivo = distancia_objetivo
+        self.distancia_objetivo = distancia_objetivo # Na busca gulosa é necessesário um nobo parâmetro chamado objetivo
         self.adjacentes = []
 
     def adiciona_adjacente(self, adjacente):
@@ -21,7 +21,7 @@ class Adjacente:
         self.distancia_aestrela = vertice.distancia_objetivo + self.custo
 
 class Grafo:
-    arad = Vertice('Arad', 366)
+    arad = Vertice('Arad', 366) # A heurística aplicado pela busca gulosa leva em consideração a distância em linha reta. E não a distância das estradas.
     zerind = Vertice('Zerind', 374)
     oradea = Vertice('Oradea', 380)
     sibiu = Vertice('Sibiu', 253)
@@ -82,131 +82,6 @@ class Grafo:
     bucharest.adiciona_adjacente(Adjacente(pitesti, 101))
     bucharest.adiciona_adjacente(Adjacente(giurgiu, 90))
 
-class Pilha:
-    def __init__(self, capacidade):
-        self.__capacidade = capacidade
-        self.__topo = -1
-
-        # Mudança do tipo do array
-        self.__valores = np.empty(self.__capacidade, dtype=object)
-
-    def __pilha_cheia(self):
-        if self.__topo == self.__capacidade - 1:
-            return True
-        else:
-            return False
-
-    def __pilha_vazia(self):
-        if self.__topo == -1:
-            return True
-        else:
-            return False
-
-    def empilhar(self, valor):
-        if self.__pilha_cheia():
-            print('A pilha está cheia')
-        else:
-            self.__topo += 1
-            self.__valores[self.__topo] = valor
-
-    def desempilhar(self):
-        # Retorna o elemento desempilhado
-        if self.__pilha_vazia():
-            print('A pilha está vazia')
-            return None
-        else:
-            temp = self.__valores[self.__topo]
-            self.__topo -= 1
-        return temp
-
-    def ver_topo(self):
-        if self.__topo != -1:
-            return self.__valores[self.__topo]
-        else:
-            return -1
-class BuscaProfundidade:
-    def __init__(self, inicio):
-        self.inicio = inicio
-        self.inicio.visitado = True
-        self.pilha = Pilha(20)
-        self.pilha.empilhar(inicio)
-
-    def buscar(self):
-        topo = self.pilha.ver_topo()
-        print('Topo: {}'.format(topo.rotulo))
-        for adjacente in topo.adjacentes:
-            print('Topo é {}. {} já foi visitada? {}'.format(topo.rotulo, adjacente.vertice.rotulo, adjacente.vertice.visitado))
-            if adjacente.vertice.visitado == False:
-                adjacente.vertice.visitado = True
-                self.pilha.empilhar(adjacente.vertice)
-                print('Empilhou {}'.format(adjacente.vertice.rotulo))
-                self.buscar()
-        print('Desempilhou: {}'.format(self.pilha.desempilhar().rotulo))
-        print()
-class FilaCircular:
-    def __init__ (self, capacidade):
-        self.capacidade = capacidade
-        self.inicio = 0
-        self.final = -1
-        self.numero_elementos = 0
-        # Mudança no tipo de dado
-        self.valores  = np.empty(self.capacidade, dtype = object)
-    
-    def __fila_vazia(self):
-        return self.numero_elementos == 0
-
-    def __fila_cheia(self):
-        return self.numero_elementos == self.capacidade
-    
-    def enfileirar (self, valor):
-        if self.__fila_cheia():
-            print('A fila está cheia')
-            return
-        if self.final == self.capacidade -1:
-            self.final = -1
-        self.final += 1
-        self.valores[self.final] = valor
-        self.numero_elementos += 1
-
-    def desenfileirar(self):
-        if self.__fila_vazia():
-            print('A fila já está vazia')
-            return
-        
-        temp = self.valores[self.inicio]
-        self.inicio += 1
-        if self.inicio == self.capacidade -1:
-            self.inicio = 0
-        self.numero_elementos -= 1
-        return temp
-
-    def primeiro(self):
-        if self.__fila_vazia():
-            return -1
-        return self.valores[self.inicio]
-
-class BuscaLargura:
-    def __init__(self, inicio):
-        self.inicio = inicio
-        self.inicio.visitado = True
-        self.fila = FilaCircular(20)
-        self.fila.enfileirar(inicio)
-
-    def buscar(self):
-        primeiro = self.fila.primeiro()
-        print('-------')
-        print('Primeiro da fila: {}'.format(primeiro.rotulo))
-        temp = self.fila.desenfileirar()
-        print('Desenfileirou: {}'.format(temp.rotulo))
-        for adjacente in primeiro.adjacentes:
-            print('Primeiro era {}. {} já foi visitado? {}'.format(temp.rotulo, adjacente.vertice.rotulo, adjacente.vertice.visitado))
-            if adjacente.vertice.visitado == False:
-                adjacente.vertice.visitado = True
-                self.fila.enfileirar(adjacente.vertice)
-                print('Enfileirou: {}'.format(adjacente.vertice.rotulo))
-        if self.fila.numero_elementos > 0:
-            self.buscar()
-
 class VetorOrdenado: # Vetror para realizar busca 
   
   def __init__(self, capacidade):
@@ -265,3 +140,5 @@ class Gulosa:
         self.buscar(vetor_ordenado.valores[0]) 
 
 
+busca_gulosa = Gulosa(Grafo.bucharest)
+busca_gulosa.buscar(Grafo.arad)
