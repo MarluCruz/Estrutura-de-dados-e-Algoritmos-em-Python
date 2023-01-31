@@ -210,9 +210,8 @@ grafo = Grafo()
 busca_largura = BuscaLargura(grafo.arad)
 busca_profundidade= BuscaProfundidade(grafo.arad)
 
-busca_profundidade.buscar()
+#busca_profundidade.buscar()
 
-"""
+
 busca_largura.buscar()
 print(busca_largura.fila.numero_elementos)
-"""
