@@ -14,6 +14,5 @@ def shell_sort(vetor):
         intervalo //= 2
     
     return vetor
-print(shell_sort(np.array([15, 34, 8, 3])))
-print(shell_sort(np.array([10, 9, 8, 7, 6, 5, 4, 3, 2, 1])))
+
 print(shell_sort(np.array([8,5,1,4,2,3])))
