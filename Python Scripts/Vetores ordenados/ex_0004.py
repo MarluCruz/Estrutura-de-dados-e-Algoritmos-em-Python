@@ -55,7 +55,7 @@ class VetorOrdenado:
                     limite_inferior = posicao_atual + 1
                 # Limite superior
                 else:
-                    limite_superior = posicao_atual
+                    limite_superior = posicao_atual -1
           
     def excluir(self, valor):
         posicao = self.pesquisar(valor)
@@ -72,5 +72,5 @@ vetor.insere(4)
 vetor.insere(64)
 vetor.insere(32)
 vetor.insere(16)
-print(vetor.pesquisar_binaria(16))
+print(vetor.pesquisar_binaria(19))
 vetor.imprime()
