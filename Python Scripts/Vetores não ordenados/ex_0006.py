@@ -44,7 +44,7 @@ class Array:
     
     def delete(self, value):
         if self.lastPosition == -1:
-            print("The array is full!")
+            print("The array is empty")
         else:
             position = self.search(value)
             if position == -1:
